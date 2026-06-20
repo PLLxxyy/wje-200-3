@@ -20,16 +20,23 @@ function RecordList({ records, onDelete, onSelectPerson }: Props) {
   return (
     <div className="record-list">
       {records.map(r => (
-        <div
-          className="record-card"
-          key={r.id}
-          onClick={() => onSelectPerson && onSelectPerson(r.name)}
-        >
+        <div className="record-card" key={r.id}>
           <div className={`icon ${r.type === 'give' ? 'icon-give' : 'icon-receive'}`}>
             {OCCASION_ICONS[r.occasion]}
           </div>
           <div className="record-info">
-            <div className="record-name record-name-link">{r.name}</div>
+            {onSelectPerson ? (
+              <button
+                type="button"
+                className="record-name record-name-link"
+                onClick={() => onSelectPerson(r.name)}
+                aria-label={`查看 ${r.name} 的往来明细`}
+              >
+                {r.name}
+              </button>
+            ) : (
+              <div className="record-name">{r.name}</div>
+            )}
             <div className="record-meta">
               <span className="tag">{r.occasion}</span>
               <span>{r.date}</span>
@@ -43,10 +50,7 @@ function RecordList({ records, onDelete, onSelectPerson }: Props) {
           </div>
           <button
             className="delete-btn"
-            onClick={e => {
-              e.stopPropagation();
-              onDelete(r.id);
-            }}
+            onClick={() => onDelete(r.id)}
             title="删除"
           >
             {'✕'}

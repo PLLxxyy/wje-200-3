@@ -678,15 +678,31 @@
         margin-bottom: 12px;
       }
 
-      /* 人名可点击 */
-      .record-name-link {
+      /* 人名可点击 - 按钮重置为链接样式 */
+      button.record-name-link {
+        background: none;
+        border: none;
+        padding: 0;
+        font: inherit;
         cursor: pointer;
-        color: #2d3436;
-      }
-
-      .record-name-link:hover {
         color: #d4402f;
         text-decoration: underline;
+        text-decoration-color: rgba(212, 64, 47, 0.4);
+        text-underline-offset: 2px;
+        text-align: left;
+        display: inline-block;
+        transition: color 0.15s, text-decoration-color 0.15s;
+        outline: none;
+      }
+
+      button.record-name-link:hover {
+        color: #c23616;
+        text-decoration-color: #c23616;
+      }
+
+      button.record-name-link:focus-visible {
+        box-shadow: 0 0 0 2px rgba(212, 64, 47, 0.3);
+        border-radius: 3px;
       }
 
       /* 汇总行可点击 */
