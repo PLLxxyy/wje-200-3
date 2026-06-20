@@ -3,6 +3,7 @@ import { GiftRecord } from '../types';
 
 interface Props {
   records: GiftRecord[];
+  onSelectPerson?: (name: string) => void;
 }
 
 interface PersonSummary {
@@ -15,7 +16,7 @@ interface PersonSummary {
   hasUnreturned: boolean;
 }
 
-function Statistics({ records }: Props) {
+function Statistics({ records, onSelectPerson }: Props) {
   const totalGive = useMemo(
     () => records.filter(r => r.type === 'give').reduce((s, r) => s + r.amount, 0),
     [records]
@@ -101,7 +102,11 @@ function Statistics({ records }: Props) {
             </span>
           </div>
           {unreturned.map(p => (
-            <div className="summary-row unreturned" key={p.name}>
+            <div
+              className="summary-row unreturned summary-row-clickable"
+              key={p.name}
+              onClick={() => onSelectPerson && onSelectPerson(p.name)}
+            >
               <div className="summary-avatar">{p.name.slice(0, 1)}</div>
               <div className="summary-info">
                 <div className="summary-name">
@@ -125,7 +130,11 @@ function Statistics({ records }: Props) {
       <div className="summary-section">
         <div className="summary-title">按人汇总</div>
         {personSummaries.map(p => (
-          <div className={`summary-row ${p.hasUnreturned ? 'unreturned' : ''}`} key={p.name}>
+          <div
+            className={`summary-row ${p.hasUnreturned ? 'unreturned' : ''} summary-row-clickable`}
+            key={p.name}
+            onClick={() => onSelectPerson && onSelectPerson(p.name)}
+          >
             <div className="summary-avatar">{p.name.slice(0, 1)}</div>
             <div className="summary-info">
               <div className="summary-name">

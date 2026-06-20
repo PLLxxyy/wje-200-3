@@ -4,8 +4,9 @@ import { loadRecords, addRecord, deleteRecord } from './utils/storage';
 import RecordList from './components/RecordList';
 import RecordForm from './components/RecordForm';
 import Statistics from './components/Statistics';
+import PersonDetail from './components/PersonDetail';
 
-type Page = 'list' | 'stats';
+type Page = 'list' | 'stats' | 'detail';
 
 function App() {
   const [page, setPage] = useState<Page>('list');
@@ -14,6 +15,7 @@ function App() {
   const [search, setSearch] = useState('');
   const [filterOccasion, setFilterOccasion] = useState<Occasion | ''>('');
   const [showFilter, setShowFilter] = useState(false);
+  const [selectedName, setSelectedName] = useState<string>('');
 
   useEffect(() => {
     setRecords(loadRecords());
@@ -30,6 +32,11 @@ function App() {
       const updated = deleteRecord(id);
       setRecords(updated);
     }
+  }, []);
+
+  const handleSelectPerson = useCallback((name: string) => {
+    setSelectedName(name);
+    setPage('detail');
   }, []);
 
   const sorted = [...records].sort((a, b) => b.date.localeCompare(a.date));
@@ -75,7 +82,7 @@ function App() {
             />
           )}
 
-          <RecordList records={filtered} onDelete={handleDelete} />
+          <RecordList records={filtered} onDelete={handleDelete} onSelectPerson={handleSelectPerson} />
 
           <button className="fab" onClick={() => setShowForm(true)} aria-label="新增记录">
             +
@@ -92,7 +99,26 @@ function App() {
               <div style={{ width: 50 }} />
             </div>
           </div>
-          <Statistics records={records} />
+          <Statistics records={records} onSelectPerson={handleSelectPerson} />
+        </>
+      )}
+
+      {page === 'detail' && (
+        <>
+          <div className="header">
+            <div className="header-row">
+              <button className="header-btn" onClick={() => setPage('list')}>
+                {'←'}
+              </button>
+              <h1>{selectedName}</h1>
+              <div style={{ width: 50 }} />
+            </div>
+          </div>
+          <PersonDetail
+            name={selectedName}
+            records={records.filter(r => r.name === selectedName)}
+            onDelete={handleDelete}
+          />
         </>
       )}
 

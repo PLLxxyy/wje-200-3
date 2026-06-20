@@ -677,6 +677,76 @@
         font-size: 48px;
         margin-bottom: 12px;
       }
+
+      /* 人名可点击 */
+      .record-name-link {
+        cursor: pointer;
+        color: #2d3436;
+      }
+
+      .record-name-link:hover {
+        color: #d4402f;
+        text-decoration: underline;
+      }
+
+      /* 汇总行可点击 */
+      .summary-row-clickable {
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+
+      .summary-row-clickable:hover {
+        background: #f8f8f8;
+      }
+
+      .summary-row-clickable.unreturned:hover {
+        background: #fff4cc;
+      }
+
+      /* 详情页 */
+      .person-detail {
+        padding: 12px;
+      }
+
+      .unreturned-tip {
+        background: #fff4e5;
+        border: 1px solid #ffd591;
+        color: #ad6800;
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        margin-bottom: 14px;
+        line-height: 1.5;
+      }
+
+      .stat-card .stat-sub {
+        font-size: 11px;
+        color: #bbb;
+        margin-top: 4px;
+      }
+
+      .detail-card {
+        margin-bottom: 0;
+        border-radius: 0;
+        border-bottom: 1px solid #f5f5f5;
+        box-shadow: none;
+      }
+
+      .detail-card:last-child {
+        border-bottom: none;
+      }
+
+      .detail-card:hover {
+        transform: none;
+        box-shadow: none;
+        background: #fafafa;
+      }
+
+      .record-note {
+        font-size: 12px;
+        color: #888;
+        margin-top: 4px;
+      }
     </style>
   </head>
   <body>
